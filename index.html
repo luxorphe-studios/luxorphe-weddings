@@ -169,6 +169,9 @@ form{background:#3E3838;padding:clamp(24px,4vw,46px);display:grid;gap:28px;min-w
 .two{display:grid;grid-template-columns:1fr 1fr;gap:28px}
 .hint{text-align:center;font-style:italic;color:var(--muted);font-size:.98rem}
 .note{text-align:center;font-style:italic;color:var(--gold);font-size:1rem}
+.hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+form{position:relative}
+form .btn[disabled]{opacity:.55;cursor:wait}
 form .btn{justify-self:center;color:var(--fg)}
 
 /* 11. Footer */
@@ -371,23 +374,25 @@ footer small a{color:var(--gold);text-decoration:none}
         <h2 style="margin-top:18px">Let’s start the creative process</h2>
         <p class="lead">We would love to know more about your wedding. We take a limited number of weddings each season, so every couple gets our full attention. We reply personally.</p>
         <dl>
-          <div><dt>Email</dt><dd>hello@luxorpheweddings.com</dd></div>
+          <div><dt>Email</dt><dd>info@luxorpheweddings.com</dd></div>
           <div><dt>Based in</dt><dd>Toronto &amp; Montréal, travelling worldwide</dd></div>
           <div><dt>Instagram</dt><dd><a href="https://www.instagram.com/luxorpheweddings" target="_blank" rel="noopener">@luxorpheweddings</a></dd></div>
         </dl>
       </div>
       <form id="form" novalidate>
-        <div class="f"><label for="n">Your name *</label><input id="n" required autocomplete="name"></div>
+        <input type="hidden" name="_subject" value="New wedding enquiry from the website">
+        <div class="hp" aria-hidden="true"><label for="hp">Leave this empty</label><input id="hp" name="_gotcha" tabindex="-1" autocomplete="off"></div>
+        <div class="f"><label for="n">Your name *</label><input id="n" name="name" required autocomplete="name"></div>
         <div class="two">
-          <div class="f"><label for="e">Email address *</label><input id="e" type="email" required autocomplete="email"></div>
-          <div class="f"><label for="c">Country of residence *</label><input id="c" required autocomplete="country-name"></div>
+          <div class="f"><label for="e">Email address *</label><input id="e" name="email" type="email" required autocomplete="email"></div>
+          <div class="f"><label for="c">Country of residence *</label><input id="c" name="country" required autocomplete="country-name"></div>
         </div>
         <div class="two">
-          <div class="f"><label for="d">Event date</label><input id="d" type="date"></div>
-          <div class="f"><label for="v">Venue *</label><input id="v" required></div>
+          <div class="f"><label for="d">Event date</label><input id="d" name="event_date" type="date"></div>
+          <div class="f"><label for="v">Venue *</label><input id="v" name="venue" required></div>
         </div>
-        <div class="f"><label for="p">Wedding planner</label><input id="p"></div>
-        <div class="f"><label for="m">Message *</label><textarea id="m" required></textarea></div>
+        <div class="f"><label for="p">Wedding planner</label><input id="p" name="wedding_planner"></div>
+        <div class="f"><label for="m">Message *</label><textarea id="m" name="message" required></textarea></div>
         <p class="hint">Share as many details as you can: number of guests, colour theme, live music and logistics.</p>
         <button class="btn line" type="submit">Send message <svg viewBox="0 0 26 10" fill="none" stroke="currentColor"><path d="M0 5h25M21 1l4 4-4 4"/></svg></button>
         <p class="note" id="note" hidden></p>
@@ -415,13 +420,23 @@ footer small a{color:var(--gold);text-decoration:none}
   document.getElementById('close').addEventListener('click',function(){m.hidden=true});
   m.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(){m.hidden=true})});
   document.addEventListener('keydown',function(e){if(e.key==='Escape')m.hidden=true});
-  var f=document.getElementById('form'),note=document.getElementById('note');
+  /* Enquiry form, sent through Formspree. Paste the form's endpoint below. */
+  var FORMSPREE='';
+  var f=document.getElementById('form'),note=document.getElementById('note'),btn=f.querySelector('button[type=submit]');
   f.addEventListener('submit',function(e){
     e.preventDefault();
     var bad=[].slice.call(f.querySelectorAll('[required]')).filter(function(x){return !x.value.trim()||(x.type==='email'&&!/^\S+@\S+\.\S+$/.test(x.value))});
     note.hidden=false;
     if(bad.length){note.textContent='Please fill in the fields marked with *.';bad[0].focus();return}
-    note.textContent='Thank you. This form isn’t connected to email yet.';
+    if(!FORMSPREE){note.textContent='Our form is being set up. Please write to us at info@luxorpheweddings.com.';return}
+    btn.disabled=true;note.textContent='Sending…';
+    fetch(FORMSPREE,{method:'POST',body:new FormData(f),headers:{'Accept':'application/json'}})
+      .then(function(r){
+        if(r.ok){f.reset();note.textContent='Thank you. Your enquiry is on its way, and we’ll reply personally.'}
+        else{note.textContent='Something went wrong while sending. Please try again, or write to info@luxorpheweddings.com.'}
+      })
+      .catch(function(){note.textContent='We couldn’t send your message. Check your connection and try again, or write to info@luxorpheweddings.com.'})
+      .then(function(){btn.disabled=false});
   });
 })();
 </script>
