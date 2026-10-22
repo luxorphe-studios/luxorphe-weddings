@@ -47,7 +47,8 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .bar.solid{background:rgba(42,38,38,.95)}
 .bar .in{display:flex;align-items:center;justify-content:space-between;gap:16px}
 .mark{display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--cream)}
-.mark img{width:42px}
+.mark img{width:68px}
+@media (max-width:600px){.mark img{width:56px}}
 .mark span{font-family:var(--sans);font-weight:300;font-size:.62rem;letter-spacing:.44em;text-transform:uppercase}
 .bar nav{display:flex;gap:30px}
 .bar nav a{font-family:var(--sans);font-weight:300;font-size:.62rem;letter-spacing:.3em;text-transform:uppercase;text-decoration:none;color:var(--cream);opacity:.85}
@@ -202,7 +203,7 @@ footer small a{color:var(--gold);text-decoration:none}
 <body>
 <header class="bar pad" id="bar">
   <div class="in">
-    <a class="mark" href="#top" aria-label="Luxorphe Weddings home"><img src="images/bee.svg" alt=""><span>Luxorphe Weddings</span></a>
+    <a class="mark" href="#top" aria-label="Luxorphe Weddings home"><img src="images/bee.svg" alt=""></a>
     <nav aria-label="Main">
       <a href="#approach">Approach</a><a href="#photographers">Photographers</a><a href="#words">Kind words</a><a href="#gallery">Gallery</a><a href="#enquire">Enquire</a>
     </nav>
