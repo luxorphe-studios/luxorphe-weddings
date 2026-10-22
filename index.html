@@ -163,12 +163,15 @@ dd a{color:var(--gold);text-underline-offset:4px}
 form{background:#3E3838;padding:clamp(24px,4vw,46px);display:grid;gap:28px;min-width:0}
 .f{display:grid;gap:6px;text-align:center}
 .f label{font-family:var(--sans);font-size:.6rem;letter-spacing:.3em;text-transform:uppercase;color:var(--muted)}
-.f input,.f textarea{background:transparent;border:0;border-bottom:1px solid var(--line);color:var(--fg);font-family:var(--serif);font-size:1.12rem;padding:8px 2px;text-align:center;width:100%;border-radius:0}
+.f input,.f textarea,.f select{background:transparent;border:0;border-bottom:1px solid var(--line);color:var(--fg);font-family:var(--serif);font-size:1.12rem;padding:8px 2px;text-align:center;width:100%;border-radius:0}
 .f textarea{min-height:130px;resize:vertical;text-align:left}
-.f input:focus,.f textarea:focus{outline:none;border-color:var(--gold)}
+.f input:focus,.f textarea:focus,.f select:focus{outline:none;border-color:var(--gold)}
 .two{display:grid;grid-template-columns:1fr 1fr;gap:28px}
 .hint{text-align:center;font-style:italic;color:var(--muted);font-size:.98rem}
 .note{text-align:center;font-style:italic;color:var(--gold);font-size:1rem}
+.f select{appearance:none;-webkit-appearance:none;cursor:pointer;text-align-last:center;background-image:linear-gradient(45deg,transparent 50%,var(--gold) 50%),linear-gradient(135deg,var(--gold) 50%,transparent 50%);background-position:calc(100% - 14px) 55%,calc(100% - 9px) 55%;background-size:5px 5px;background-repeat:no-repeat;padding-right:24px}
+.f select:invalid{color:var(--muted)}
+.f option{color:#2A2626}
 .hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
 form{position:relative}
 form .btn[disabled]{opacity:.55;cursor:wait}
@@ -391,9 +394,18 @@ footer small a{color:var(--gold);text-decoration:none}
           <div class="f"><label for="d">Event date</label><input id="d" name="event_date" type="date"></div>
           <div class="f"><label for="v">Venue *</label><input id="v" name="venue" required></div>
         </div>
-        <div class="f"><label for="p">Wedding planner</label><input id="p" name="wedding_planner"></div>
+        <div class="two">
+          <div class="f"><label for="p">Wedding planner</label><input id="p" name="wedding_planner"></div>
+          <div class="f"><label for="b">Photography &amp; film investment *</label><select id="b" name="investment" required>
+            <option value="" disabled selected>Select a range</option>
+            <option>$6,000 – $9,000</option>
+            <option>$9,000 – $14,000</option>
+            <option>$14,000 – $20,000</option>
+            <option>$20,000 and above</option>
+          </select></div>
+        </div>
         <div class="f"><label for="m">Message *</label><textarea id="m" name="message" required></textarea></div>
-        <p class="hint">Share as many details as you can: number of guests, colour theme, live music and logistics.</p>
+        <p class="hint">Collections are tailored to each wedding. Share as many details as you can: number of guests, colour theme, live music and logistics.</p>
         <button class="btn line" type="submit">Send message <svg viewBox="0 0 26 10" fill="none" stroke="currentColor"><path d="M0 5h25M21 1l4 4-4 4"/></svg></button>
         <p class="note" id="note" hidden></p>
       </form>
