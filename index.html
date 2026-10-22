@@ -433,7 +433,7 @@ footer small a{color:var(--gold);text-decoration:none}
   m.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(){m.hidden=true})});
   document.addEventListener('keydown',function(e){if(e.key==='Escape')m.hidden=true});
   /* Enquiry form, sent through Formspree. Paste the form's endpoint below. */
-  var FORMSPREE='';
+  var FORMSPREE='https://formspree.io/f/mvkzeynr';
   var f=document.getElementById('form'),note=document.getElementById('note'),btn=f.querySelector('button[type=submit]');
   f.addEventListener('submit',function(e){
     e.preventDefault();
