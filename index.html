@@ -17,6 +17,7 @@
   --cream:#F6F1E8; --sand:#F0EBE3; --linen:#E6DFD2;
   --ink:#2A2626; --ink-soft:#5E5654; --fg:#F0EBE3; --muted:#B7B5AF;
   --gold:#C9A15F; --gold-ink:#8A6A33;
+  --blush:#EFE4DB; --blush-soft:#F7EFE9;
   --sans:"Jost","Helvetica Neue",Arial,sans-serif;
   --serif:"Cormorant Garamond","Cormorant",Georgia,serif;
   --gl:max(16px,env(safe-area-inset-left,0px)); --gr:max(16px,env(safe-area-inset-right,0px));
@@ -45,6 +46,8 @@ h1,h2,h3{margin:0;font-weight:200;text-wrap:balance}
 body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:60;background:var(--deep)}
 .bar{position:fixed;top:env(safe-area-inset-top,0px);left:0;right:0;z-index:50;padding-block:18px;transition:background .4s}
 .bar.solid{background:rgba(42,38,38,.95)}
+.bar{transition:background .4s,opacity .6s ease,transform .6s ease,visibility .6s}
+.bar.hide{opacity:0;transform:translateY(-100%);visibility:hidden;pointer-events:none}
 .bar .in{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:24px}
 .mark{display:flex;align-items:center;height:64px;text-decoration:none;color:var(--cream)}
 .mark img{width:96px;height:64px;object-fit:contain}
@@ -79,6 +82,9 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .btn svg{width:26px;height:10px}
 .open .btn{background:var(--cream);color:var(--deep);border-color:var(--cream)}
 .open .btn:hover{background:transparent;color:var(--cream)}
+.cue{position:absolute;left:50%;bottom:calc(26px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);z-index:3;display:grid;justify-items:center;gap:10px;color:var(--cream);text-decoration:none}
+.cue i{display:block;width:1px;height:46px;background:linear-gradient(var(--cream),transparent);transform-origin:top}
+@media (prefers-reduced-motion:no-preference){.cue i{animation:cue 2.4s ease-in-out infinite}@keyframes cue{0%{transform:scaleY(0)}50%{transform:scaleY(1)}100%{transform:scaleY(1);opacity:0}}}
 .btn.line:hover{border-color:var(--gold);color:var(--gold)}
 
 /* 2. Statement */
@@ -90,6 +96,33 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .state figure{margin:0;position:relative}
 .state figure img{width:100%;aspect-ratio:4/5;object-fit:cover;filter:grayscale(1)}
 .state figure figcaption{position:absolute;left:-18px;bottom:28px;background:var(--cream);padding:12px 18px;color:var(--gold-ink)}
+
+/* Welcome */
+.welcome{padding-block:clamp(90px,12vw,170px);background:linear-gradient(180deg,var(--blush-soft),var(--blush))}
+.welcome .in{display:grid;grid-template-columns:1fr 1fr;gap:clamp(48px,7vw,110px);align-items:center}
+.duo{position:relative;padding-bottom:18%}
+.duo .p1{width:72%;aspect-ratio:4/5;object-fit:cover;filter:grayscale(1)}
+.duo .p2{position:absolute;right:0;bottom:0;width:50%;aspect-ratio:4/5;object-fit:cover;filter:grayscale(1);border:10px solid var(--blush)}
+.badge{position:absolute;left:58%;top:-26px;width:124px;height:124px;border-radius:50%;background:var(--deep);color:var(--cream);display:grid;place-content:center;justify-items:center;gap:4px;text-align:center;box-shadow:0 0 0 6px var(--blush-soft),0 0 0 7px rgba(201,161,95,.6)}
+.badge b{font-family:var(--sans);font-weight:300;font-size:.62rem;letter-spacing:.28em;text-transform:uppercase;color:var(--gold)}
+.badge span{font-style:italic;font-size:.98rem;line-height:1}
+.badge i{width:26px;height:1px;background:var(--gold);margin:3px 0}
+.welcome .txt{display:grid;gap:24px;min-width:0}
+.welcome h2{font-family:var(--serif);font-weight:300;font-style:italic;font-size:clamp(2.3rem,4.6vw,3.6rem);line-height:1.08}
+.welcome p.body{color:var(--ink-soft);max-width:34rem}
+.welcome .btn{justify-self:start;color:var(--ink)}
+.welcome .btn:hover{border-color:var(--gold-ink);color:var(--gold-ink)}
+
+/* Layered photographs */
+.layer{padding-block:clamp(80px,10vw,150px);background:var(--cream)}
+.stage{position:relative;aspect-ratio:1240/860;max-width:100%}
+.stage .wash{position:absolute;left:14%;top:16%;width:66%;height:70%;background:var(--blush)}
+.stage img{position:absolute;object-fit:cover;max-width:100%}
+.stage .a{left:0;top:4%;width:38%;aspect-ratio:4/5}
+.stage .b{left:31%;top:36%;width:25%;aspect-ratio:4/5;filter:grayscale(1);border:10px solid var(--cream);z-index:2}
+.stage .c{right:0;top:0;width:30%;aspect-ratio:4/5}
+.stage .say{position:absolute;right:2%;bottom:2%;width:36%;display:grid;gap:14px;z-index:3}
+.stage .say p.it{font-size:clamp(1.6rem,2.8vw,2.4rem);line-height:1.15;color:var(--ink)}
 
 /* 3. Triptych */
 .trip{display:grid;grid-template-columns:1fr 1.25fr 1fr;gap:6px;background:var(--cream)}
@@ -148,6 +181,17 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .w q{font-style:italic;font-size:1.25rem;line-height:1.4;color:var(--ink);quotes:"“" "”"}
 .w .caps{color:var(--ink-soft)}
 
+/* Reviews */
+.words{background:linear-gradient(180deg,var(--blush),var(--blush-soft))}
+.rgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(16px,2.4vw,30px)}
+.rv{background:var(--cream);padding:30px 26px 26px;display:grid;gap:18px;align-content:start;min-width:0;box-shadow:0 1px 0 rgba(42,38,38,.04)}
+.stars{display:flex;gap:4px;color:var(--gold)}
+.stars svg{width:15px;height:15px}
+.rv q{font-style:italic;font-size:1.22rem;line-height:1.45;color:var(--ink);quotes:"“" "”"}
+.rv .by{display:flex;align-items:center;gap:12px;margin-top:4px}
+.rv .by img{width:44px;height:44px;border-radius:50%;object-fit:cover}
+.rv .by span{font-family:var(--sans);font-weight:300;font-size:.62rem;letter-spacing:.28em;text-transform:uppercase;color:var(--ink-soft)}
+
 /* 9. Gallery */
 .gal{padding-block:clamp(80px,11vw,150px)}
 .gal .head{text-align:center;display:grid;justify-items:center;gap:16px;margin-bottom:56px}
@@ -198,6 +242,16 @@ footer small{font-size:.92rem;color:#8c8580}
 footer small a{color:var(--gold);text-decoration:none}
 
 @media (max-width:860px){
+  .welcome .in{grid-template-columns:1fr}
+  .duo{max-width:520px}
+  .stage{aspect-ratio:auto;display:grid;gap:0}
+  .stage .wash{display:none}
+  .stage img{position:static}
+  .stage .a{width:78%}
+  .stage .b{width:58%;margin:-28% 0 0 auto;position:relative;left:auto;top:auto}
+  .stage .c{display:none}
+  .stage .say{position:static;width:100%;margin-top:30px}
+  .rgrid{grid-template-columns:1fr 1fr}
   .state .in,.row,.pair,.enq .in{grid-template-columns:1fr}
   .row.flip .ph{order:0}
   .who:nth-child(2){margin-top:0}
@@ -206,7 +260,7 @@ footer small a{color:var(--gold);text-decoration:none}
   .trip img:nth-child(3){display:none}
   .wgrid{grid-template-columns:1fr 1fr}
 }
-@media (max-width:520px){.two{grid-template-columns:1fr}dl div{grid-template-columns:1fr;gap:4px}.wgrid{grid-template-columns:1fr}}
+@media (max-width:520px){.rgrid{grid-template-columns:1fr}.badge{width:104px;height:104px;left:auto;right:4%;top:-20px}.two{grid-template-columns:1fr}dl div{grid-template-columns:1fr;gap:4px}.wgrid{grid-template-columns:1fr}}
 @media (prefers-reduced-motion:no-preference){
   .open>img{animation:drift 16s ease-out both}
   .open .t>*{animation:rise 1.4s cubic-bezier(.2,.7,.2,1) both}
@@ -245,29 +299,40 @@ footer small a{color:var(--gold);text-decoration:none}
       <div class="rule"></div>
       <a class="btn" href="#enquire">Begin your story <svg viewBox="0 0 26 10" fill="none" stroke="currentColor"><path d="M0 5h25M21 1l4 4-4 4"/></svg></a>
     </div>
+    <a class="cue" href="#welcome" aria-label="Scroll to the next section"><span class="caps">Scroll</span><i></i></a>
   </section>
 
-  <section class="state pad">
+  <section class="welcome pad" id="welcome">
     <div class="in">
+      <div class="duo">
+        <img class="p1" src="images/g2.jpg" alt="Yissegnon Avosse" style="object-position:46% 30%">
+        <img class="p2" src="images/laurette.jpg" alt="Laurette Metogo" style="object-position:42% 20%">
+        <div class="badge" aria-label="Fellow of SWPP and Master of WPPI"><b>SWPP</b><span>Fellow</span><i></i><b>WPPI</b><span>Master</span></div>
+      </div>
       <div class="txt">
-        <p class="caps gold" style="color:var(--gold-ink)">Wedding photography &amp; film</p>
-        <h2>Your day, exactly as it felt.</h2>
+        <p class="caps" style="color:var(--gold-ink)">Welcome</p>
+        <h2>Hello, we’re Laurette &amp; Yissegnon.</h2>
         <div class="rule"></div>
         <p class="body">We photograph weddings the way they really happen. The two of us work quietly beside you and catch what no one could stage: a hand squeezed before the aisle, a father’s laugh, the dance floor at midnight. Then, for a few unhurried minutes, we step in and make portraits with the polish of a fashion editorial.</p>
         <p class="body">We were born in Africa, shaped by Britain and Canada, and now call Toronto and Montréal home. That mix shows in our work: classic and warm, never stiff, and always made with love.</p>
+        <a class="btn line" href="#photographers">Meet us <svg viewBox="0 0 26 10" fill="none" stroke="currentColor"><path d="M0 5h25M21 1l4 4-4 4"/></svg></a>
       </div>
-      <figure>
-        <img src="images/m7416.jpg" alt="Bride walking across a lawn in a flowing gown, black and white">
-        <figcaption class="it">Laurette &amp; Yissegnon</figcaption>
-      </figure>
     </div>
   </section>
 
-  <div class="trip" aria-label="Wedding photographs">
-    <img src="images/g1.jpg" alt="Bride on autumn railway tracks">
-    <img src="images/g6.jpg" alt="Couple embracing beneath a floral arch">
-    <img src="images/w489.jpg" alt="Couple kissing in an autumn forest">
-  </div>
+  <section class="layer pad" aria-label="Wedding photographs">
+    <div class="in stage">
+      <div class="wash"></div>
+      <img class="a" src="images/g1.jpg" alt="Bride on autumn railway tracks">
+      <img class="c" src="images/g6.jpg" alt="Couple embracing beneath a floral arch">
+      <img class="b" src="images/m7416.jpg" alt="Bride walking across a lawn, black and white">
+      <div class="say">
+        <p class="caps" style="color:var(--gold-ink)">Wedding photography &amp; film</p>
+        <p class="it">Your day, exactly as it felt.</p>
+        <div class="rule"></div>
+      </div>
+    </div>
+  </section>
 
   <section class="appr dark pad" id="approach">
     <div class="in">
@@ -358,11 +423,11 @@ footer small a{color:var(--gold);text-decoration:none}
         <h2>Kind words</h2>
         <div class="rule"></div>
       </div>
-      <div class="wgrid">
-        <figure class="w" style="margin:0"><img src="images/n95.jpg" alt="Nanou and Louis"><q>Absolutely stunning.</q><figcaption class="caps">Nanou &amp; Louis</figcaption></figure>
-        <figure class="w" style="margin:0"><img src="images/m2799.jpg" alt="Carmen and Steph"><q>The photos are absolutely gorgeous and epic.</q><figcaption class="caps">Carmen &amp; Steph</figcaption></figure>
-        <figure class="w" style="margin:0"><img src="images/g5.jpg" alt="Claudia and Mitch"><q>Enchanting! The photos are enchanting.</q><figcaption class="caps">Claudia &amp; Mitch</figcaption></figure>
-        <figure class="w" style="margin:0"><img src="images/e86.jpg" alt="Emma and Desil"><q>We’ve downloaded the photos and they are beyond words. Many, many thanks to Laurette and Yissegnon.</q><figcaption class="caps">Emma &amp; Desil</figcaption></figure>
+      <div class="rgrid">
+        <figure class="rv" style="margin:0"><div class="stars" aria-label="5 out of 5"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.8l2.8 6 6.5.7-4.9 4.4 1.4 6.4L12 17l-5.8 3.3 1.4-6.4L2.7 9.5l6.5-.7z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.8l2.8 6 6.5.7-4.9 4.4 1.4 6.4L12 17l-5.8 3.3 1.4-6.4L2.7 9.5l6.5-.7z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.8l2.8 6 6.5.7-4.9 4.4 1.4 6.4L12 17l-5.8 3.3 1.4-6.4L2.7 9.5l6.5-.7z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.8l2.8 6 6.5.7-4.9 4.4 1.4 6.4L12 17l-5.8 3.3 1.4-6.4L2.7 9.5l6.5-.7z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.8l2.8 6 6.5.7-4.9 4.4 1.4 6.4L12 17l-5.8 3.3 1.4-6.4L2.7 9.5l6.5-.7z"/></svg></div><q>Absolutely stunning.</q><figcaption class="by"><img src="images/n95.jpg" alt=""><span>Nanou &amp; Louis</span></figcaption></figure>
+        <figure class="rv" style="margin:0"><div class="stars" aria-label="5 out of 5"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.8l2.8 6 6.5.7-4.9 4.4 1.4 6.4L12 17l-5.8 3.3 1.4-6.4L2.7 9.5l6.5-.7z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.8l2.8 6 6.5.7-4.9 4.4 1.4 6.4L12 17l-5.8 3.3 1.4-6.4L2.7 9.5l6.5-.7z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.8l2.8 6 6.5.7-4.9 4.4 1.4 6.4L12 17l-5.8 3.3 1.4-6.4L2.7 9.5l6.5-.7z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.8l2.8 6 6.5.7-4.9 4.4 1.4 6.4L12 17l-5.8 3.3 1.4-6.4L2.7 9.5l6.5-.7z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.8l2.8 6 6.5.7-4.9 4.4 1.4 6.4L12 17l-5.8 3.3 1.4-6.4L2.7 9.5l6.5-.7z"/></svg></div><q>The photos are absolutely gorgeous and epic.</q><figcaption class="by"><img src="images/m2799.jpg" alt=""><span>Carmen &amp; Steph</span></figcaption></figure>
+        <figure class="rv" style="margin:0"><div class="stars" aria-label="5 out of 5"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.8l2.8 6 6.5.7-4.9 4.4 1.4 6.4L12 17l-5.8 3.3 1.4-6.4L2.7 9.5l6.5-.7z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.8l2.8 6 6.5.7-4.9 4.4 1.4 6.4L12 17l-5.8 3.3 1.4-6.4L2.7 9.5l6.5-.7z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.8l2.8 6 6.5.7-4.9 4.4 1.4 6.4L12 17l-5.8 3.3 1.4-6.4L2.7 9.5l6.5-.7z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.8l2.8 6 6.5.7-4.9 4.4 1.4 6.4L12 17l-5.8 3.3 1.4-6.4L2.7 9.5l6.5-.7z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.8l2.8 6 6.5.7-4.9 4.4 1.4 6.4L12 17l-5.8 3.3 1.4-6.4L2.7 9.5l6.5-.7z"/></svg></div><q>Enchanting! The photos are enchanting.</q><figcaption class="by"><img src="images/g5.jpg" alt=""><span>Claudia &amp; Mitch</span></figcaption></figure>
+        <figure class="rv" style="margin:0"><div class="stars" aria-label="5 out of 5"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.8l2.8 6 6.5.7-4.9 4.4 1.4 6.4L12 17l-5.8 3.3 1.4-6.4L2.7 9.5l6.5-.7z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.8l2.8 6 6.5.7-4.9 4.4 1.4 6.4L12 17l-5.8 3.3 1.4-6.4L2.7 9.5l6.5-.7z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.8l2.8 6 6.5.7-4.9 4.4 1.4 6.4L12 17l-5.8 3.3 1.4-6.4L2.7 9.5l6.5-.7z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.8l2.8 6 6.5.7-4.9 4.4 1.4 6.4L12 17l-5.8 3.3 1.4-6.4L2.7 9.5l6.5-.7z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.8l2.8 6 6.5.7-4.9 4.4 1.4 6.4L12 17l-5.8 3.3 1.4-6.4L2.7 9.5l6.5-.7z"/></svg></div><q>We’ve downloaded the photos and they are beyond words. Many, many thanks to Laurette and Yissegnon.</q><figcaption class="by"><img src="images/e86.jpg" alt=""><span>Emma &amp; Desil</span></figcaption></figure>
       </div>
     </div>
   </section>
@@ -438,7 +503,8 @@ footer small a{color:var(--gold);text-decoration:none}
 <script>
 (function(){
   var bar=document.getElementById('bar');
-  function s(){bar.classList.toggle('solid',window.scrollY>60)}
+  var hero=document.querySelector('.open');
+  function s(){var lim=hero?hero.offsetHeight*0.6:60,past=window.scrollY>=lim;bar.classList.toggle('hide',!past);bar.classList.toggle('solid',past)}
   window.addEventListener('scroll',s,{passive:true});s();
   var m=document.getElementById('menu');
   document.getElementById('open').addEventListener('click',function(){m.hidden=false});
