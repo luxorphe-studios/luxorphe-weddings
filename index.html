@@ -183,7 +183,8 @@ form .btn{justify-self:center;color:var(--fg)}
 /* 11. Footer */
 footer{padding-block:64px calc(48px + env(safe-area-inset-bottom,0px));text-align:center}
 footer .in{display:grid;justify-items:center;gap:22px}
-footer img{width:56px}
+footer img{width:96px;height:64px;object-fit:contain}
+@media (max-width:600px){footer img{width:78px;height:52px}}
 footer nav{display:flex;flex-wrap:wrap;justify-content:center;gap:10px 28px}
 footer nav a{font-family:var(--sans);font-size:.6rem;letter-spacing:.3em;text-transform:uppercase;text-decoration:none;color:var(--muted)}
 footer nav a:hover{color:var(--gold)}
