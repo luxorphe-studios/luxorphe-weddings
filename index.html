@@ -396,16 +396,20 @@ footer small a{color:var(--gold);text-decoration:none}
         </div>
         <div class="two">
           <div class="f"><label for="p">Wedding planner</label><input id="p" name="wedding_planner"></div>
-          <div class="f"><label for="b">Photography &amp; film investment *</label><select id="b" name="investment" required>
-            <option value="" disabled selected>Select a range</option>
-            <option>$6,000 – $9,000</option>
-            <option>$9,000 – $14,000</option>
-            <option>$14,000 – $20,000</option>
-            <option>$20,000 and above</option>
+          <div class="f"><label for="b">Collection &amp; investment *</label><select id="b" name="investment" required>
+            <option value="" disabled selected>Select a collection</option>
+            <optgroup label="Photography">
+              <option>Photography · $6,500 – $9,000</option>
+              <option>Photography · $9,000 and above</option>
+            </optgroup>
+            <optgroup label="Photography &amp; film">
+              <option>Photography &amp; film · $11,500 – $16,000</option>
+              <option>Photography &amp; film · $16,000 and above</option>
+            </optgroup>
           </select></div>
         </div>
         <div class="f"><label for="m">Message *</label><textarea id="m" name="message" required></textarea></div>
-        <p class="hint">Collections are tailored to each wedding. Share as many details as you can: number of guests, colour theme, live music and logistics.</p>
+        <p class="hint">Photography collections begin at $6,500, and photography &amp; film at $11,500. Each collection is tailored to your wedding, so share as many details as you can: number of guests, colour theme, live music and logistics.</p>
         <button class="btn line" type="submit">Send message <svg viewBox="0 0 26 10" fill="none" stroke="currentColor"><path d="M0 5h25M21 1l4 4-4 4"/></svg></button>
         <p class="note" id="note" hidden></p>
       </form>
